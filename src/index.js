@@ -2,7 +2,6 @@ const express = require("express");
 require("./db/mongoose");
 const userRouter = require('./routes/index')
 const blogRouter = require('./routes/blog')
-// const loginRouter = require('./routes/login')
 const bodyParser = require('body-parser');
 const path = require('path')
 
@@ -15,7 +14,6 @@ app.set('views', path.join(__dirname, '/views'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(userRouter);
 app.use(blogRouter);
-// app.use(loginRouter)
 
 
 app.listen(port, () => {
