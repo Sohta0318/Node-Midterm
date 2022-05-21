@@ -1,6 +1,6 @@
 const express = require("express");
 require("./db/mongoose");
-const userRouter = require('./routes/index')
+const userRouter = require('./routes/user')
 const blogRouter = require('./routes/blog')
 const bodyParser = require('body-parser');
 const path = require('path')
