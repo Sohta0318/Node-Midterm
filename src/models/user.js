@@ -1,66 +1,31 @@
+const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+const Joi = require('joi');
+const passwordComplexity = require("joi-password-complexity");
 
-const mongoose = require("mongoose");
-const validator = require("validator");
-// const bcrypt = require("bcryptjs");
-// const jwt = require("jsonwebtoken");
-// const Task = require("./task");
+const userSchema = new mongoose.Schema({
+  firstName: {type:String,required:true},
+  lastName:{type:String, required:true},
+  email:{type:String,required:true},
+  password:{type:String,required:true},
+});
 
-const userSchema = new mongoose.Schema(
-    {
-      name: {
-        type: String,
-        required: true,
-        trim: true,
-      },
-      email: {
-        type: String,
-        unique: true,
-        required: true,
-        trim: true,
-        lowercase: true,
-        validate(value) {
-          if (!validator.isEmail(value)) {
-            throw new Error("Email is invalid");
-          }
-        },
-      },
-      password: {
-        type: String,
-        required: true,
-        minlength: 7,
-        trim: true,
-        validate(value) {
-          if (value.toLowerCase().includes("password")) {
-            throw new Error('Password cannot contain "password"');
-          }
-        },
-      },
-      age: {
-        type: Number,
-        default: 0,
-        validate(value) {
-          if (value < 0) {
-            throw new Error("Age must be a postive number");
-          }
-        },
-      },
-      tokens: [
-        {
-          token: {
-            type: String,
-            required: true,
-          },
-        },
-      ],
-      avatar: {
-        type: Buffer,
-      },
-    },
-    {
-      timestamps: true,
-    }
-  );
+userSchema.methods.generateAuthToken = function(){
+  const token = jwt.sign({_id:this._id},process.env.JWTPRIVATEKEY,{expiresIn:"7d"});
+  return token
+};
 
-  const User = mongoose.model("User", userSchema);
+const User = mongoose.model("user",userSchema);
 
-module.exports = User;
+const validate = (data) => {
+  const schema = Joi.object({
+    firstName:Joi.string().required().label("First Name"),
+    lastName:Joi.string().required().label("Last Name"),
+    email:Joi.string().email().required.label("Email"),
+    password:passwordComplexity().required().label("Password")
+  });
+  return schema.validate(data)
+};
+
+module.exports = {User, validate};
+

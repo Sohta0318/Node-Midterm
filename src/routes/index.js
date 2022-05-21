@@ -1,77 +1,75 @@
-const router = require("express").Router();
-const User = require("../models/user");
+const express = require("express");
+const User = require("../models/user2");
+const router = new express.Router();
 
-router.get("/", (req, res) => {
-  res.status(200).json({ msg: "/ Route checker" });
-});
+router.post("/users", async (req, res) => {
+  const user = new User(req.body);
 
-router.get("/login", (req, res) => {
-  let sess = req.session;
-
-  if (sess.email) {
-    return res.redirect("/api/admin");
-  }
-  res.render("login");
-});
-
-router.post("/login", (req, res) => {
-  req.session.email = req.body.email;
-  res.end("logged in");
-});
-
-router.get("/register", (req, res) => {
-  // let sess = req.session
-  // if (sess.email) {
-  //   return res.redirect("/api/admin");
-  // }
-  res.render("register");
-});
-
-router.post("/register", (req, res) => {
-    const { email, password } = req.body;
-
-    const user = new User(email, password)
-    user.save()
-    .then(result => {
-        console.log(result);
-        res.end('Registered')
-    })
-    .catch(err => console.error(err))
-});
-
-router.get("/admin", (req, res) => {
-  const { email } = req.session;
-  if (email) {
-    res.write(`<h1>Hello ${email}</h1>`);
-    res.end();
-  } else {
-    res.end("Login first");
+  try {
+    await user.save();
+    res.status(201).send(user);
+  } catch (error) {
+    res.status(400).send(error);
   }
 });
 
-router.post("/login", (req, res) => {
-  req.session.email = req.body.email;
-  res.end("logged in");
-});
-
-router.get("/admin", (req, res) => {
-  const { email } = req.session;
-
-  if (email) {
-    res.write(`<h1>Hello ${email}</h1>`);
-    res.end();
-  } else {
-    res.end("Login first");
+router.get("/users", async (req, res) => {
+  try {
+    const user = await User.find({});
+    res.send(user);
+  } catch (error) {
+    res.status(500).send();
   }
 });
 
-router.get("/logout", (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      return console.error(err);
+router.get("/users/:id", async (req, res) => {
+  const _id = req.params.id;
+
+  try {
+    const user = await User.findById(_id);
+
+    if (!user) {
+      return res.status(404).send();
     }
-    res.redirect("/api/login");
+    res.send(user);
+  } catch (error) {
+    res.status(500).send();
+  }
+});
+
+router.patch("/users/:id", async (req, res) => {
+  const updates = Object.keys(req.body);
+  const allowedUpdates = ["name", "email", "password", "age"];
+  const isValidOperation = updates.every((update) => {
+    return allowedUpdates.includes(update);
   });
+  if (!isValidOperation) {
+    res.status(400).send({ error: "Invalid Updates!" });
+  }
+  try {
+    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidator: true,
+    });
+    if (!user) {
+      return res.status(404).send();
+    }
+    res.send(user);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+router.delete("/users/:id", async (req, res) => {
+  try {
+    const user = await User.findByIdAndDelete(req.params.id);
+    if (!user) {
+      return res.status(404).send();
+    }
+    res.send(user);
+  } catch (error) {
+    res.status(500).send();
+  }
 });
 
 module.exports = router;
