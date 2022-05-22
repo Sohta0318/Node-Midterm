@@ -3,13 +3,13 @@ const Blog = require("../models/blog");
 const router = new express.Router();
 const auth = require("../middleware/auth");
 
-router.post("/create_blog", auth, async (req, res) => {
+router.post("/blogs", auth, async (req, res) => {
   const blog = new Blog({ ...req.body, owner: req.user._id });
 
   try {
     await blog.save();
     res.status(201).send(blog);
-    res.redirect('/blogs')
+    res.redirect("/blogs");
   } catch (e) {
     res.status(400).send(e);
   }
@@ -17,20 +17,19 @@ router.post("/create_blog", auth, async (req, res) => {
 
 router.get("/blogs", auth, async (req, res) => {
   try {
-    await req.user.populate("products");
-    res.send(req.user.products);
-    res.render('blogs')
+    await req.user.populate("blogs");
+    res.send(req.user.blogs);
+    res.render("blogs");
   } catch (e) {
     res.status(500).send();
     console.log(e);
   }
 });
 
-router.get("/blog/edit/:id", auth, async (req, res) => {
+router.get("/blogs/:id", auth, async (req, res) => {
   const _id = req.params.id;
 
   try {
-
     const blog = await Blog.findOne({ _id, owner: req.user._id });
 
     if (!blog) {
@@ -38,15 +37,15 @@ router.get("/blog/edit/:id", auth, async (req, res) => {
     }
 
     res.send(blog);
-    res.render('edit_blog')
+    res.render("edit_blog");
   } catch (e) {
     res.status(500).send();
   }
 });
 
-router.patch("/blog/:id", auth, async (req, res) => {
+router.patch("/blogs/:id", auth, async (req, res) => {
   const updates = Object.keys(req.body);
-  const allowedUpdates = ["description", "title"];
+  const allowedUpdates = ["description", "title", "price", "items", "image"];
   const isValidOperation = updates.every((update) =>
     allowedUpdates.includes(update)
   );
@@ -69,30 +68,29 @@ router.patch("/blog/:id", auth, async (req, res) => {
     await blog.save();
 
     res.send(blog);
-    res.redirect('/blogs')
+    res.redirect("/blogs");
   } catch (e) {
     res.status(400).send(e);
   }
 });
 
-// router.delete("/blog", auth, async (req, res) => {
-//   try {
-//     // const product = await product.findByIdAndDelete(req.params.id);
-//     const blog = await Blog.deleteMany();
-
-//     if (!blog) {
-//       res.status(404).send();
-//     }
-
-//     res.send(blog);
-//   } catch (e) {
-//     res.status(500).send();
-//   }
-// });
-
-router.delete("/blog/:id", auth, async (req, res) => {
+router.delete("/blogs/", auth, async (req, res) => {
   try {
-    // const product = await product.findByIdAndDelete(req.params.id);
+    // const blog = await blog.findByIdAndDelete(req.params.id);
+    const blog = await Blog.deleteMany();
+
+    if (!blog) {
+      res.status(404).send();
+    }
+
+    res.send(blog);
+  } catch (e) {
+    res.status(500).send();
+  }
+});
+router.delete("/blogs/:id", auth, async (req, res) => {
+  try {
+    // const blog = await blog.findByIdAndDelete(req.params.id);
     const blog = await Blog.findOneAndDelete({
       _id: req.params.id,
       owner: req.user._id,
