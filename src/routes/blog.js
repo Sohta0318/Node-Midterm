@@ -15,7 +15,15 @@ router.post("/blogs", auth, async (req, res) => {
   }
 });
 
-router.get("/blogs", auth, async (req, res) => {
+router.get("/blogs", (req, res) => {
+  res.render("blogs");
+});
+
+router.get("/create_blog", (req, res) => {
+  res.render("create_blog");
+});
+
+router.get("/blogs2", auth, async (req, res) => {
   try {
     await req.user.populate("blogs");
     res.send(req.user.blogs);

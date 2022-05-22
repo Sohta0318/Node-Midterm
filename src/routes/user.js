@@ -10,6 +10,7 @@ router.post("/users", async (req, res) => {
     await user.save();
     const token = await user.generateAuthToken();
     res.status(201).send({ user, token });
+    // res.redirect("/login");
   } catch (e) {
     res.status(400).send(e);
   }
@@ -29,7 +30,7 @@ router.post("/users/login", async (req, res) => {
 });
 
 router.get("/login", async (req, res) => {
-  res.render("login");
+  res.render("login", { test: "hello" });
 });
 
 router.get("/register", async (req, res) => {
@@ -58,11 +59,6 @@ router.post("/users/logoutAll", auth, async (req, res) => {
     res.status(500).send();
   }
 });
-
-// router.get("/users/:id", auth, async (req, res) => {
-//   res.send(req.user);
-//   // console.log(req.user);
-// });
 
 router.get("/users/:id", async (req, res) => {
   const _id = req.params.id;
