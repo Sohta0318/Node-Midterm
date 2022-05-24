@@ -9,7 +9,6 @@ router.post("/blogs", auth, async (req, res) => {
   try {
     await blog.save();
     res.status(201).send(blog);
-    res.redirect("/blogs");
   } catch (e) {
     res.status(400).send(e);
   }
@@ -21,6 +20,10 @@ router.get("/blogs", (req, res) => {
 
 router.get("/create_blog", (req, res) => {
   res.render("create_blog");
+});
+
+router.get("/edit_blog/:id", (req, res) => {
+  res.render("edit_blog");
 });
 
 router.get("/blogs2", auth, async (req, res) => {
@@ -67,7 +70,6 @@ router.patch("/blogs/:id", auth, async (req, res) => {
       _id: req.params.id,
       owner: req.user._id,
     });
-    // const blog = await blog.findById(req.params.id);
 
     if (!blog) {
       return res.status(404).send();
