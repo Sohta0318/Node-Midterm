@@ -225,3 +225,47 @@ h2 {
   font-weight: normal;
   color: #fff;
 }
+
+.favorite-wrapper {
+  width: 70vw;
+  height: auto;
+  margin: 0 auto;
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+.favorite-wrapper h1 {
+  text-align: left;
+  padding-top: 20px;
+  padding-bottom: 0;
+}
+
+.favorite-wrapper p {
+  margin: 10px 0;
+  margin-bottom: 15px;
+}
+
+.favorite-button button {
+  background: #f16272;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 4px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 0.8em;
+  letter-spacing: 0.05em;
+  text-align: center;
+  text-transform: uppercase;
+  border-radius: 3px;
+  margin-right: 10px;
+}
+
+.favorite-button :hover {
+  background-color: #8c8c8c;
+}
+
+.favorite-each {
+  border-bottom: 1px solid gray;
+  margin-top: 50px;
+  padding-bottom: 15px;
+}

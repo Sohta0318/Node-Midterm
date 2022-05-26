@@ -30,7 +30,6 @@ router.get("/blogs2", auth, async (req, res) => {
   try {
     await req.user.populate("blogs");
     res.send(req.user.blogs);
-    res.render("blogs");
   } catch (e) {
     res.status(500).send();
     console.log(e);
@@ -48,7 +47,6 @@ router.get("/blogs/:id", auth, async (req, res) => {
     }
 
     res.send(blog);
-    res.render("edit_blog");
   } catch (e) {
     res.status(500).send();
   }
@@ -56,7 +54,7 @@ router.get("/blogs/:id", auth, async (req, res) => {
 
 router.patch("/blogs/:id", auth, async (req, res) => {
   const updates = Object.keys(req.body);
-  const allowedUpdates = ["description", "title", "price", "items", "image"];
+  const allowedUpdates = ["description", "title"];
   const isValidOperation = updates.every((update) =>
     allowedUpdates.includes(update)
   );
@@ -78,7 +76,6 @@ router.patch("/blogs/:id", auth, async (req, res) => {
     await blog.save();
 
     res.send(blog);
-    res.redirect("/blogs");
   } catch (e) {
     res.status(400).send(e);
   }
@@ -100,7 +97,6 @@ router.delete("/blogs/", auth, async (req, res) => {
 });
 router.delete("/blogs/:id", auth, async (req, res) => {
   try {
-    // const blog = await blog.findByIdAndDelete(req.params.id);
     const blog = await Blog.findOneAndDelete({
       _id: req.params.id,
       owner: req.user._id,

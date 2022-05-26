@@ -1,36 +1,24 @@
 <%- include("_header") -%>
-<div id="form-main">
-  <div class="form-wrapper">
-    <h1>Sign In</h1>
-    <form action="" method="post" id="login">
-      <div class="form-item">
-        <label for="email"></label>
-        <input
-          type="email"
+
+    <div id="login">
+      <form name='form-login'>
+          <input type="email"
           name="email"
           required="required"
           placeholder="Email Address"
           class="loginEmail"
-        />
-      </div>
-      <div class="form-item">
-        <label for="password"></label>
-        <input
-          type="password"
+          />
+       
+          <input type="password"
           name="password"
           required="required"
           placeholder="Password"
-          class="loginPassword"
-        />
-      </div>
-      <div class="button-panel">
-        <input type="submit" class="button" title="Sign In" value="Sign In" />
-      </div>
-    </form>
-    <div class="form-footer">
-      <p><a href="/register">Create account</a></p>
-    </div>
-  </div>
-</div>
+          class="loginPassword">
+        
+        <input type="submit" class="button" title="Sign In" value="Login">
 
+</form>
+<div class="form-footer">
+  <p><a href="/register">Create account</a></p>
+</div>
 <%- include("_footer") -%>
