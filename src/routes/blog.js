@@ -52,6 +52,10 @@ router.get("/blogs/:id", auth, async (req, res) => {
   }
 });
 
+router.get("/blogs_delete/:id", (req, res) => {
+  res.render("blogs");
+});
+
 router.patch("/blogs/:id", auth, async (req, res) => {
   const updates = Object.keys(req.body);
   const allowedUpdates = ["description", "title"];
@@ -95,6 +99,7 @@ router.delete("/blogs/", auth, async (req, res) => {
     res.status(500).send();
   }
 });
+
 router.delete("/blogs/:id", auth, async (req, res) => {
   try {
     const blog = await Blog.findOneAndDelete({

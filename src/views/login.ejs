@@ -1,24 +1,16 @@
 <%- include("_header") -%>
 
-    <div id="login">
-      <form name='form-login'>
-          <input type="email"
-          name="email"
-          required="required"
-          placeholder="Email Address"
-          class="loginEmail"
-          />
-       
-          <input type="password"
-          name="password"
-          required="required"
-          placeholder="Password"
-          class="loginPassword">
-        
-        <input type="submit" class="button" title="Sign In" value="Login">
+<div class="login">
+  <div class="login-triangle"></div>
 
-</form>
-<div class="form-footer">
-  <p><a href="/register">Create account</a></p>
+  <h2 class="login-header">Log in</h2>
+
+  <form class="login-container">
+    <p><input type="email" name="email" required="required" placeholder="Email Address" class="loginEmail" /></p>
+    <p> <input type="password" name="password" required="required" placeholder="Password" class="loginPassword" /></p>
+    <p><input type="submit" class="button" title="Sign In" value="Sign In" /></p>
+    <p><a href="/register">Create new account</a></p>
+  </form>
 </div>
+
 <%- include("_footer") -%>

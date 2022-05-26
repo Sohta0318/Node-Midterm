@@ -33,6 +33,7 @@ const userHandler = (e, url, body, redirect) => {
     },
   });
 };
+
 const logoutHandler = (url, redirect) => {
   const token = localStorage.getItem("token");
   $.ajax(url, {
@@ -49,6 +50,7 @@ const logoutHandler = (url, redirect) => {
     },
   });
 };
+
 const blogHandler = (e, url, body, redirect, method) => {
   e.preventDefault();
   const token = localStorage.getItem("token");
@@ -143,25 +145,32 @@ $(() => {
         const id = element._id;
         const title = element.title;
         const description = element.description;
+        // * Name owner
         const blog = `<div class="blog-each">
         <h2>Name</h2>
         <h1>${title}</h1>
         <p>${description}</p>
         <div class="blog-button">
           <button><a href='/edit_blog/${id}'>Edit</a></button>
-          <button id='delete'><a href='/blogs/${id}'>Delete</a></button>
+          <button id='delete'><a href='/blogs_delete/${id}'>Delete</a></button>
+          <button id='delete'><a href='/favorite/${id}'>Favorite</a></button>
         </div>
       </div>`;
         wrapper.append(blog);
       });
     });
+
+    if (pathName.includes("/favorite/")) {
+      //* favorite
+    }
   }
-  if (pathName.includes("/blogs/")) {
-    console.log("work");
+
+  if (pathName.includes("/blogs_delete/")) {
     const test = pathName.split("/");
     const id = test[2];
-    // deleteHandler(`/blogs/${id}`);
+    deleteHandler(`/blogs/${id}`);
   }
+
   if (pathName.includes("edit_blog")) {
     const test = pathName.split("/");
     const id = test[2];
@@ -181,6 +190,7 @@ $(() => {
     });
   }
 
+  //* favorite
   if (pathName === "/favorites") {
     const wrapper = $(".favorite-wrapper");
     const favorites = getBlogHandler("/favorites2");
@@ -199,9 +209,6 @@ $(() => {
       </div>`;
         wrapper.append(favorite);
       });
-      // $("#delete").on("click", () => {
-      //   deleteHandler(`/blogs/${id}`);
-      // });
     });
   }
 });

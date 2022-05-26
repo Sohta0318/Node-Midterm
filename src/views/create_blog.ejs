@@ -2,19 +2,20 @@
 
 <main>
   <div class="create-wrapper">
-    <form action="" id="create_blog" method="post">
-      <div class="create-form-item">
-        <label for="title">Title</label>
-        <input type="text" name="title" class="createTitle" />
-      </div>
-      <div class="create-form-item-description">
-        <label for="script">Description</label>
-        <textarea name="description" id="" cols="30" rows="20" class="createDescription"></textarea>
-      </div>
-      <div class="create-button">
-        <input type="submit" value="Create" />
-      </div>
+    <form action="" id="create_blog">
+    <div class="create-item-each">
+      <label for="title">Title</label>
+      <input type="text" name="title" class="createTitle" />
+    </div>
+    <div class="create-item-each">
+      <label for="script">Description</label>
+      <textarea name="description" id="" cols="30" rows="20" class="createDescription"></textarea>
+    </div>
+    <div class="create-button">
+      <input type="submit" value="Create" />
+    </div>
     </form>
   </div>
 </main>
+
 <%- include("_footer") %>

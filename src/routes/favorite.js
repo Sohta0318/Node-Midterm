@@ -18,12 +18,8 @@ router.get("/favorites", (req, res) => {
   res.render("favorites");
 });
 
-router.get("/create_favorite", (req, res) => {
-  res.render("create_favorite");
-});
-
-router.get("/edit_favorite/:id", (req, res) => {
-  res.render("edit_favorite");
+router.get("/favorite/:id", (req, res) => {
+  res.render("/favorites");
 });
 
 router.get("/favorites2", auth, async (req, res) => {
@@ -46,7 +42,6 @@ router.delete("/favorites/:id", auth, async (req, res) => {
     if (!favorite) {
       res.status(404).send();
     }
-
     res.send(favorite);
   } catch (e) {
     res.status(500).send();
