@@ -3,6 +3,10 @@ const User = require("../models/user");
 const router = new express.Router();
 const auth = require("../middleware/auth");
 
+router.get("/", (req, res) => {
+  res.redirect("login");
+});
+
 router.post("/users", async (req, res) => {
   const user = new User(req.body);
 
@@ -29,7 +33,7 @@ router.post("/users/login", async (req, res) => {
 });
 
 router.get("/login", async (req, res) => {
-  res.render("login", { test: "hello" });
+  res.render("login");
 });
 
 router.get("/register", async (req, res) => {

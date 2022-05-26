@@ -3,33 +3,16 @@
 <div class="login">
   <div class="login-triangle"></div>
 
-  <h2 class="login-header">Log in</h2>
+  <h2 class="login-header">Sign up</h2>
+  <div id="form-main">
+    <form class="login-container" id="register">
+      <p><input type="text" name="name" required="required" placeholder="Your name" class="registerName" /></p>
+      <p> <input type="email" name="email" required="required" placeholder="Email Address" class="registerEmail" /></p>
+      <p><input type="password" name="password" required="required" placeholder="Password" class="registerPassword" /></p>
+      <p><input type="submit" class="button" title="register" value="Register" /></p>
+      <p><a href="/login">Already have account?</a></p>
+    </form>
+  </div>
 
-  <form class="login-container">
-    <p><input
-      type="text"
-      name="name"
-      required="required"
-      placeholder="Your name"
-      class="registerName"
-    /></p>
-    <p> <input
-      type="email"
-      name="email"
-      required="required"
-      placeholder="Email Address"
-      class="registerEmail"
-    /></p>
-    <p><input
-      type="password"
-      name="password"
-      required="required"
-      placeholder="Password"
-      class="registerPassword"
-    /></p>
-    <p><input type="submit" class="button" title="register" value="Register" /></p>
-    <p><a href="/login">Already have account?</a></p>
-  </form>
-</div>
 
 <%- include("_footer") -%>

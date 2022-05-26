@@ -1,16 +1,17 @@
 <%- include("_header") -%>
 
+<div id="form-main">
 <div class="login">
   <div class="login-triangle"></div>
 
   <h2 class="login-header">Log in</h2>
 
-  <form class="login-container">
+  <form class="login-container" id="login">
     <p><input type="email" name="email" required="required" placeholder="Email Address" class="loginEmail" /></p>
     <p> <input type="password" name="password" required="required" placeholder="Password" class="loginPassword" /></p>
     <p><input type="submit" class="button" title="Sign In" value="Sign In" /></p>
     <p><a href="/register">Create new account</a></p>
   </form>
 </div>
-
+</div>
 <%- include("_footer") -%>
