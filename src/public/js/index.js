@@ -70,6 +70,24 @@ const blogHandler = (e, url, body, redirect, method) => {
   });
 };
 
+const favoriteHandler = (url, body, redirect, method) => {
+  const token = localStorage.getItem("token");
+  $.ajax(url, {
+    data: JSON.stringify(body),
+    contentType: "application/json",
+    type: method,
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+    },
+    success: function (data) {
+      window.location.href = redirect;
+    },
+    error: function (data) {
+      alert("Something went wrong");
+    },
+  });
+};
+
 const getBlogHandler = (url) => {
   const token = localStorage.getItem("token");
   const data = $.ajax(url, {
@@ -87,7 +105,7 @@ const getBlogHandler = (url) => {
   return data;
 };
 
-const deleteHandler = (url) => {
+const deleteHandler = (url, redirect) => {
   const token = localStorage.getItem("token");
   $.ajax(url, {
     type: "DELETE",
@@ -95,7 +113,7 @@ const deleteHandler = (url) => {
       xhr.setRequestHeader("Authorization", `Bearer ${token}`);
     },
     success: function (data) {
-      window.location.href = "/blogs";
+      window.location.href = redirect;
     },
     error: function (data) {
       alert("Something went wrong");
@@ -153,22 +171,32 @@ $(() => {
         <div class="blog-button">
           <button><a href='/edit_blog/${id}'>Edit</a></button>
           <button id='delete'><a href='/blogs_delete/${id}'>Delete</a></button>
-          <button id='delete'><a href='/favorite/${id}'>Favorite</a></button>
+          <button id='delete'><a href='/add_favorite/${id}'>Favorite</a></button>
         </div>
       </div>`;
         wrapper.append(blog);
       });
     });
+  }
 
-    if (pathName.includes("/favorite/")) {
-      //* favorite
-    }
+  if (pathName.includes("/add_favorite/")) {
+    const test = pathName.split("/");
+    const id = test[2];
+    const blog = getBlogHandler(`/blogs/${id}`);
+    blog.then((data) => {
+      console.log(data);
+      const favoriteForm = {
+        title: data.title,
+        description: data.description,
+      };
+      favoriteHandler("/favorites", favoriteForm, "/blogs", "POST");
+    });
   }
 
   if (pathName.includes("/blogs_delete/")) {
     const test = pathName.split("/");
     const id = test[2];
-    deleteHandler(`/blogs/${id}`);
+    deleteHandler(`/blogs/${id}`, "/blogs");
   }
 
   if (pathName.includes("edit_blog")) {
@@ -190,7 +218,6 @@ $(() => {
     });
   }
 
-  //* favorite
   if (pathName === "/favorites") {
     const wrapper = $(".favorite-wrapper");
     const favorites = getBlogHandler("/favorites2");
@@ -204,11 +231,17 @@ $(() => {
         <h1>${title}</h1>
         <p>${description}</p>
         <div class="favorite-button">
-          <button id='delete'><a href=''>Delete</a></button>
+          <button id='delete'><a href='/favorites_delete/${id}'>Delete</a></button>
         </div>
       </div>`;
         wrapper.append(favorite);
       });
     });
+  }
+
+  if (pathName.includes("/favorites_delete/")) {
+    const test = pathName.split("/");
+    const id = test[2];
+    deleteHandler(`/favorites/${id}`, "/favorites");
   }
 });

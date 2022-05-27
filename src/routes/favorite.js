@@ -18,8 +18,12 @@ router.get("/favorites", (req, res) => {
   res.render("favorites");
 });
 
-router.get("/favorite/:id", (req, res) => {
-  res.render("/favorites");
+router.get("/add_favorite/:id", (req, res) => {
+  res.render("favorites");
+});
+
+router.get("/favorites_delete/:id", (req, res) => {
+  res.render("favorites");
 });
 
 router.get("/favorites2", auth, async (req, res) => {
