@@ -238,6 +238,7 @@ $(() => {
       });
     });
   }
+
   if (pathName.includes("/favorites_delete/")) {
     const test = pathName.split("/");
     const id = test[2];
