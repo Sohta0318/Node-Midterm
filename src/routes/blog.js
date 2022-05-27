@@ -1,5 +1,6 @@
 const express = require("express");
 const Blog = require("../models/blog");
+const Comment = require("../models/comment");
 const router = new express.Router();
 const auth = require("../middleware/auth");
 
@@ -58,7 +59,7 @@ router.get("/blogs_delete/:id", (req, res) => {
 
 router.patch("/blogs/:id", auth, async (req, res) => {
   const updates = Object.keys(req.body);
-  const allowedUpdates = ["description", "title"];
+  const allowedUpdates = ["description", "title", "comments"];
   const isValidOperation = updates.every((update) =>
     allowedUpdates.includes(update)
   );
@@ -82,21 +83,6 @@ router.patch("/blogs/:id", auth, async (req, res) => {
     res.send(blog);
   } catch (e) {
     res.status(400).send(e);
-  }
-});
-
-router.delete("/blogs/", auth, async (req, res) => {
-  try {
-    // const blog = await blog.findByIdAndDelete(req.params.id);
-    const blog = await Blog.deleteMany();
-
-    if (!blog) {
-      res.status(404).send();
-    }
-
-    res.send(blog);
-  } catch (e) {
-    res.status(500).send();
   }
 });
 

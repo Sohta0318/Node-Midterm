@@ -1,0 +1,24 @@
+<%- include("_header") %>
+
+<h1>Add Comment</h1>
+<div class="comment-wrapper">
+  <div class="comment-each">
+    <h1 class="commentTitle"></h1>
+    <p class="commentDescription"></p>
+  </div>
+  <form action="" method="post" id="add_comment">
+    <div class="create-item-each">
+      <label for="name">Username</label>
+      <input type="text" name="name" class="commentUsername" placeholder="Enter your name" />
+    </div>
+    <div class="create-item-each">
+      <label for="comment">Comment</label>
+      <textarea name="comment" id="" cols="30" rows="5" class="commentBody" placeholder="Enter comment..."></textarea>
+    </div>
+    <div class="create-button">
+      <input type="submit" value="Add Comment" />
+    </div>
+  </form>
+</div>
+
+<%- include("_footer") %>

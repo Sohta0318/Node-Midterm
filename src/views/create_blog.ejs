@@ -2,24 +2,19 @@
 
 <main>
   <div class="create-wrapper">
-    <form action="" method="post" id="edit_blog">
-    <div class="create-item-each">
-      <label for="title">Title</label>
-      <input type="text" name="title" class="editTitle" />
-    </div>
-    <div class="create-item-each">
-      <label for="script">Description</label>
-      <textarea
-        name="description"
-        id=""
-        cols="30"
-        rows="20"
-        class="editDescription"
-      ></textarea>
-    </div>
-    <div class="create-button">
-      <input type="submit" value="Edit" />
-    </div>
+    <form action="" method="post" id="create_blog">
+      <div class="create-item-each">
+        <label for="title">Title</label>
+        <input type="text" name="title" class="createTitle" placeholder="Enter Blog Title" />
+      </div>
+      <div class="create-item-each">
+        <label for="script">Description</label>
+        <textarea name="description" id="" cols="30" rows="20" class="createDescription"
+          placeholder="Enter Blog Body"></textarea>
+      </div>
+      <div class="create-button">
+        <input type="submit" value="Create" />
+      </div>
     </form>
   </div>
 </main>

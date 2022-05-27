@@ -3,6 +3,7 @@ require("./db/mongoose");
 const userRouter = require("./routes/user");
 const blogRouter = require("./routes/blog");
 const favoriteRouter = require("./routes/favorite");
+const commentRouter = require("./routes/comment");
 const bodyParser = require("body-parser");
 const path = require("path");
 
@@ -17,6 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(userRouter);
 app.use(blogRouter);
 app.use(favoriteRouter);
+app.use(commentRouter);
 
 app.listen(port, () => {
   console.log("Server is up on" + port);
